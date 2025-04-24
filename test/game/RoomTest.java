@@ -81,7 +81,7 @@ class RoomTest {
         assertEquals(expectedNorthRoom.getName(), room5.getName());
     }
 
-    @Disabled
+
     @Test
     public void testAddItemToRoom() {
         //Arrange
@@ -93,7 +93,7 @@ class RoomTest {
         assertEquals("flashlight", actual.getName());
     }
 
-    @Disabled
+
     @Test
     public void testRemoveItemFromRoom() {
         //Arrange
@@ -105,7 +105,7 @@ class RoomTest {
         assertNotNull(found);
     }
 
-    @Disabled
+
     @Test
     public void testRemoveItemNotInRoom() {
         //Arrange

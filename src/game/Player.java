@@ -37,7 +37,8 @@ public class Player {
                 requestedRoom = currentRoom.getWestRoom();
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + direction);
+                System.out.println("not a valid direction try again!");
+                move(direction);
         }
         if(requestedRoom!= null)
         {
@@ -59,7 +60,7 @@ public class Player {
     public boolean takeItem(String itemName) {
         Item pickupFromRoom = currentRoom.removeItem(itemName);
         if (pickupFromRoom != null) {
-            //TODO
+            inventory.add(pickupFromRoom);
             return true;
         }
         return false;

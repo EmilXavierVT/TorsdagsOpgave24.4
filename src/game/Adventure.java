@@ -47,8 +47,8 @@ public class Adventure {
                     break;
                 case "go":
                     Direction direction = parseCommand(commandString[1]);
-                    goCommand(direction);
-                    break;
+                    if(direction != null) goCommand(direction);
+                    else break;
                 case "take":
                     if (player.takeItem(secondWord)) {
                         ui.printMessage("You have taken the " + secondWord);
@@ -89,6 +89,9 @@ public class Adventure {
             case "w", "west":
                 requestedDirection = Direction.WEST;
                 break;
+            default:
+                return null;
+
         }
         return requestedDirection;
     }

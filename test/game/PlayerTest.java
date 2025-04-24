@@ -49,7 +49,7 @@ class PlayerTest {
         assertFalse(player.move(Direction.WEST));
     }
 
-    @Disabled
+
     @Test
     public void testPickupItemFromRoom() {
         //Arrange BeforeEach
@@ -59,7 +59,7 @@ class PlayerTest {
         assertTrue(player.getInventory().size() == 1);
     }
 
-    @Disabled
+
     @Test
     public void testPickupNotExistingItemFromRoom() {
         //Arrange BeforeEach
