@@ -13,6 +13,6 @@ public class Consumable extends Item{
     }
    @Override
     public String toString(){
-        return getDescription() + "and regenerates by "+ healthPoints;
+        return getDescription() + " that regenerates by "+ healthPoints;
    }
 }

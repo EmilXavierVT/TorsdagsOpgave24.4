@@ -68,4 +68,25 @@ class PlayerTest {
         player.takeItem("ball");
         assertTrue(player.getInventory().isEmpty());
     }
+
+    @Test
+    public void addBerryToInventory(){
+//        arrange before
+        Consumable berry = new Consumable("An exquisite blue berry",3);
+//        act
+        player.addToInventory(berry);
+        assertTrue(player.getInventory().contains(berry));
+
+    }
+    @Test
+    public void TestPoisonousFoodEffect(){
+
+//        arrange before
+        player.addToInventory(new Consumable("a foul smelling piece of meat",-7));
+//      act
+        player.consumeItem("meat");
+        assertEquals(3,player.getHP());
+    }
+
+
 }

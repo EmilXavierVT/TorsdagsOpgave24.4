@@ -56,6 +56,15 @@ public class Adventure {
                         ui.printMessage("There is nothing like " + secondWord + " to take around here.");
                     }
                     break;
+                case "eat":
+                    if(player.consumeItem(secondWord)){
+                        ui.printMessage("you're now eating the " + secondWord+ " your HP changes to "+player.getHP());
+                    }else {
+                        ui.printMessage("you do not carry: " + secondWord);
+                    }
+                    break;
+                case "health":
+                    ui.printMessage("you have "+player.getHP()+ "in HP");
                 default:
                     ui.printMessage("I do not understand that command.");
             }

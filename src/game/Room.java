@@ -31,7 +31,7 @@ public class Room {
     public void addItem(String description, String name) {
         this.addItem(new Item(description, name));
     }
-
+    public void addConsumable(String description, int HP){this.addItem(new Consumable(description,HP));}
     public Room getNorthRoom() {
         return northRoom; //TODO
     }

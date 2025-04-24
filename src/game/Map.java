@@ -18,6 +18,7 @@ public class Map {
         //TODO create rest of the 9 rooms in cave
 
         Room room4 = new Room("Wet cave","large dark cave - the floor is quite wet and slippery here.");
+        room4.addConsumable("A delicious glistering apple",5);
                 Room room7 = new Room("Cavern lake", "the dark cool reflection of the cavern roof portrays a grand cavern lake. there seem to be a light at the bottom");
                 Room room8 = new Room("Mellon cave", "small stony path next to the dark lake. A small door seems to be carved into the rock-face");
                 Room room6 = new Room("Stairwell","a tight enclosure leading deeper into the stomach of the cave");

@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Player {
 
+    private int currentHealth = 10;
     private Room currentRoom;
     private ArrayList<Item> inventory;
 
@@ -56,6 +57,10 @@ public class Player {
     public List<Item> getInventory() {
         return inventory;
     }
+    public void addToInventory(Item item){
+        inventory.add(item);
+
+    }
 
     public boolean takeItem(String itemName) {
         Item pickupFromRoom = currentRoom.removeItem(itemName);
@@ -65,4 +70,33 @@ public class Player {
         }
         return false;
     }
+
+    public void setHP(int changeOfHP){
+        currentHealth = this.currentHealth+changeOfHP;
+    }
+    public int getHP(){
+        return this.currentHealth;
+    }
+    public boolean consumeItem(String consumableName) {
+        if (inventory.isEmpty()) {
+            return false;
+        }
+//        takes the inventory list and runs through all possible names until one matches with the paramater string
+//        removes the consumable and sets the hp of the player
+
+        for (int i = 0; i < inventory.size(); i++) {
+            Item item = inventory.get(i);
+            if (item instanceof Consumable) {
+                if (item.getName().equalsIgnoreCase(consumableName)) {
+                    setHP(((Consumable) item).getHealthPoints());
+                    inventory.remove(i);
+                    // Optionally, trigger effects of the consumable here
+                    // ((Consumable) item).consume();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

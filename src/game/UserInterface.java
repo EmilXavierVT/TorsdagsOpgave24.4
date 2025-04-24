@@ -61,6 +61,8 @@ public class UserInterface {
                  HELP   or INFO, shows this help-text
                  GO     followed by one of the directions: North, South, East or West, moves the player in that direction (if possible)
                         You can also just write a direction, or simply the first letter of a direction.
+                 EAT    will let you eat a consumable if present in your inventory
+                 HEALTH returns your current health
                  LOOK   Looks around you, and describes what you can see
                  TAKE   or GET, followed by the name of an item, to pick up an item in the room
                  EXIT   Ends the game
