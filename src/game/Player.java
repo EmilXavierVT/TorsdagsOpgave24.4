@@ -28,19 +28,28 @@ public class Player {
                 requestedRoom = currentRoom.getNorthRoom();
                 break;
             case SOUTH:
-                //TODO
+                requestedRoom = currentRoom.getSouthRoom();
                 break;
             case EAST:
-                //TODO
+                requestedRoom = currentRoom.getEastRoom();
                 break;
             case WEST:
-                //TODO
+                requestedRoom = currentRoom.getWestRoom();
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + direction);
+        }
+        if(requestedRoom!= null)
+        {
+            currentRoom = requestedRoom;
+            return true;
         }
 
         // TODO if (requestedRoom != null) make currentRoom the requestedRoom;
         // TODO return whether move was possible
-        return false;
+        {
+            return false;
+        }
     }
 
     public List<Item> getInventory() {
