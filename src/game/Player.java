@@ -6,6 +6,8 @@ import java.util.List;
 public class Player {
 
     private int currentHealth = 10;
+    private int currentAttack = 5;
+    private boolean equipedItem = false;
     private Room currentRoom;
     private ArrayList<Item> inventory;
 
@@ -77,6 +79,13 @@ public class Player {
     public int getHP(){
         return this.currentHealth;
     }
+    public void setCurrentAttack(int changeOfAP){
+        currentAttack = this.currentAttack+changeOfAP;
+    }
+    public int getCurrentAttack(){
+        return this.currentAttack;
+    }
+
     public boolean consumeItem(String consumableName) {
         if (inventory.isEmpty()) {
             return false;
@@ -99,4 +108,44 @@ public class Player {
         return false;
     }
 
+    public boolean EquipItem(String WeaponName) {
+
+        if(equipedItem){
+            unequipWeapon();
+
+        }
+
+        if (!equipedItem) {
+//        takes the inventory list and runs through all possible names until one matches with the paramater string
+//        removes the consumable and sets the hp of the player
+
+            for (int i = 0; i < inventory.size(); i++) {
+                Item item = inventory.get(i);
+                if (item instanceof Weapon) {
+                    if (item.getName().equalsIgnoreCase(WeaponName)) {
+                            setCurrentAttack(((Weapon)item).getDamagePoints());
+                        // Optionally, trigger effects of the consumable here
+                        // ((Consumable) item).consume();
+                        equipedItem =true;
+                        return true;
+                    }
+                }if(item instanceof RangedWeapon){
+                    if(((RangedWeapon) item).getRounds()>0){
+                        setCurrentAttack(((RangedWeapon) item).getDamagePoints());
+                        equipedItem =true;
+                        if(((RangedWeapon) item).getRounds()==0){
+                            unequipWeapon();
+                        }
+                    }   return true;
+                }
+            }
+
+        }
+        return false;
+    }
+
+    public void unequipWeapon(){
+        currentHealth = 5;
+        equipedItem =false;
+    }
 }

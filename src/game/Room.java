@@ -32,6 +32,9 @@ public class Room {
         this.addItem(new Item(description, name));
     }
     public void addConsumable(String description, int HP){this.addItem(new Consumable(description,HP));}
+    public void addRangedWeapon(String description, int damagePoints, int rounds){this.addItem(new RangedWeapon(description,damagePoints,rounds));}
+
+
     public Room getNorthRoom() {
         return northRoom; //TODO
     }

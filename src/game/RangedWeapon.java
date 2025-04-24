@@ -6,4 +6,10 @@ public class RangedWeapon extends Weapon{
         super(description, damagePoints);
         this.rounds = rounds;
     }
+    public void setRounds(int extraCharges){
+        rounds = rounds + extraCharges;
+    }
+    public int getRounds(){
+        return this.rounds;
+    }
 }

@@ -19,7 +19,10 @@ public class Map {
 
         Room room4 = new Room("Wet cave","large dark cave - the floor is quite wet and slippery here.");
         room4.addConsumable("A delicious glistering apple",5);
+
+
                 Room room7 = new Room("Cavern lake", "the dark cool reflection of the cavern roof portrays a grand cavern lake. there seem to be a light at the bottom");
+                room7.addRangedWeapon("An old heavy crossbow",5,3);
                 Room room8 = new Room("Mellon cave", "small stony path next to the dark lake. A small door seems to be carved into the rock-face");
                 Room room6 = new Room("Stairwell","a tight enclosure leading deeper into the stomach of the cave");
                 Room room9 = new Room("Den of snails", "a million snails all approach you have stepped into their secret lair!");

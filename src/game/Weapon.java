@@ -10,4 +10,11 @@ public class Weapon extends Item{
     }
 
 
+    public int getDamagePoints() {
+        return damagePoints;
+    }
+
+    public void setDamagePoints(int damagePoints) {
+        this.damagePoints = damagePoints;
+    }
 }

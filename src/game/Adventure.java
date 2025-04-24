@@ -65,6 +65,11 @@ public class Adventure {
                     break;
                 case "health":
                     ui.printMessage("you have "+player.getHP()+ "in HP");
+                case "equip":
+                    if(player.EquipItem(secondWord)){
+                        ui.printMessage("you have now equipped "+secondWord+" your damage points is now "+player.getCurrentAttack());
+                    }          
+                    break;
                 default:
                     ui.printMessage("I do not understand that command.");
             }
