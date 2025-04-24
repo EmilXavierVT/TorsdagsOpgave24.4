@@ -38,11 +38,19 @@ public class UserInterface {
     public void describeRoom(Room room) {
         System.out.println(room.getDescription());
         ArrayList<Item> items = room.getItems();
+        ArrayList<Creature> creatures =room.getCreatures();
         if (!items.isEmpty()) {
             System.out.print("Items in the room: ");
             for (Item item: items) {
                 System.out.print(item.getDescription() + " ");
             }
+            System.out.println();
+        }
+        if (!creatures.isEmpty()) {
+            System.out.print("Creatures in the room: ");
+
+                System.out.print(creatures.getFirst());
+
             System.out.println();
         }
     }

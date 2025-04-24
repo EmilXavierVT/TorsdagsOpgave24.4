@@ -2,14 +2,17 @@ package game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Player {
 
     private int currentHealth = 10;
     private int currentAttack = 5;
-    private boolean equipedItem = false;
+    private int successRate =100;
+    private boolean isEquipped = false;
     private Room currentRoom;
     private ArrayList<Item> inventory;
+    private Item equipedItem;
 
     public Player() {
         inventory = new ArrayList<>();
@@ -73,18 +76,6 @@ public class Player {
         return false;
     }
 
-    public void setHP(int changeOfHP){
-        currentHealth = this.currentHealth+changeOfHP;
-    }
-    public int getHP(){
-        return this.currentHealth;
-    }
-    public void setCurrentAttack(int changeOfAP){
-        currentAttack = this.currentAttack+changeOfAP;
-    }
-    public int getCurrentAttack(){
-        return this.currentAttack;
-    }
 
     public boolean consumeItem(String consumableName) {
         if (inventory.isEmpty()) {
@@ -110,12 +101,12 @@ public class Player {
 
     public boolean EquipItem(String WeaponName) {
 
-        if(equipedItem){
+        if(isEquipped){
             unequipWeapon();
 
         }
 
-        if (!equipedItem) {
+        if (!isEquipped) {
 //        takes the inventory list and runs through all possible names until one matches with the paramater string
 //        removes the consumable and sets the hp of the player
 
@@ -124,15 +115,19 @@ public class Player {
                 if (item instanceof Weapon) {
                     if (item.getName().equalsIgnoreCase(WeaponName)) {
                             setCurrentAttack(((Weapon)item).getDamagePoints());
+                        setSuccessRate(95); // TODO change to unique parameter
                         // Optionally, trigger effects of the consumable here
                         // ((Consumable) item).consume();
-                        equipedItem =true;
+                        isEquipped =true;
+                        equipedItem =item;
                         return true;
                     }
                 }if(item instanceof RangedWeapon){
-                    if(((RangedWeapon) item).getRounds()>0){
+                    if(((RangedWeapon) item).getRounds()!=0){
                         setCurrentAttack(((RangedWeapon) item).getDamagePoints());
-                        equipedItem =true;
+                        setSuccessRate(90); // TODO change to unique parameter
+                        isEquipped =true;
+                        equipedItem =item;
                         if(((RangedWeapon) item).getRounds()==0){
                             unequipWeapon();
                         }
@@ -145,7 +140,43 @@ public class Player {
     }
 
     public void unequipWeapon(){
-        currentHealth = 5;
-        equipedItem =false;
+        this.currentAttack = 5;
+        this.isEquipped =false;
+        this.successRate =100;
+        this.equipedItem =null;
     }
+    public int attack() {
+        Random random = new Random();
+        int missFactor = random.nextInt(100);
+        if (missFactor > successRate) {
+            return 0;
+        }
+        return currentAttack + missFactor/25;
+    }
+
+
+    public void setSuccessRate(int successRate) {
+        this.successRate = successRate;
+    }
+    public void setHP(int changeOfHP){
+        currentHealth = this.currentHealth+changeOfHP;
+    }
+    public int getHP(){
+        return this.currentHealth;
+    }
+    public void setCurrentAttack(int changeOfAP){
+        currentAttack = this.currentAttack+changeOfAP;
+    }
+    public int getCurrentAttack(){
+        return this.currentAttack;
+    }
+
+    public Item getEquipedItem() {
+        return equipedItem;
+    }
+
+    public boolean isEquipped(){
+        return isEquipped;
+    }
+
 }

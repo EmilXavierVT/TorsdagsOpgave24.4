@@ -11,16 +11,19 @@ public class Room {
     private String name;
     private String description;
     private ArrayList<Item> items;
+    private ArrayList<Creature> creatures;
 
     public Room(String name, String description) {
         this.name = name;
         this.description = description;
         items = new ArrayList<>();
+        creatures = new ArrayList<>();
     }
 
     public void addItem(Item item) {
         items.add(item);
     }
+    public void addCreature(Creature creature){creatures.add(creature);}
 
     // Convenience methods for creating and adding Item
     public void addItem(String description) {
@@ -33,12 +36,17 @@ public class Room {
     }
     public void addConsumable(String description, int HP){this.addItem(new Consumable(description,HP));}
     public void addRangedWeapon(String description, int damagePoints, int rounds){this.addItem(new RangedWeapon(description,damagePoints,rounds));}
-
-
-    public Room getNorthRoom() {
-        return northRoom; //TODO
+    public void addMeleeWeapon(String description,int damagePoints){this.addItem(new MelleWeapon(description,damagePoints));}
+    public void addCreature(String description, String name, int healthPoints, int damagePoints, int successRate){
+        this.addCreature(new Creature(description, name, healthPoints, damagePoints, successRate));
     }
 
+// we set the room order by the call of the following methods
+//    we then check if the current room is the opposite of the set room, north vs. south,
+//    if it is not we set it too
+    public Room getNorthRoom() {
+        return northRoom;
+    }
     public void setNorthRoom(Room northRoom) {
        this.northRoom=northRoom;
         if (northRoom.getSouthRoom() != this) {
@@ -47,9 +55,8 @@ public class Room {
     }
 
     public Room getEastRoom() {
-        return eastRoom; //TODO
+        return eastRoom;
     }
-
     public void setEastRoom(Room eastRoom) {
         this.eastRoom=eastRoom;
         if (eastRoom.getWestRoom() != this) {
@@ -58,9 +65,8 @@ public class Room {
     }
 
     public Room getSouthRoom() {
-        return southRoom; //TODO
+        return southRoom;
     }
-
     public void setSouthRoom(Room southRoom) {
        this.southRoom=southRoom;
         if (southRoom.getNorthRoom() != this) {
@@ -69,9 +75,8 @@ public class Room {
     }
 
     public Room getWestRoom() {
-        return westRoom; //TODO
+        return westRoom;
     }
-
     public void setWestRoom(Room westRoom) {
         this.westRoom=westRoom;
         if (westRoom.getEastRoom() != this) {
@@ -85,6 +90,14 @@ public class Room {
 
     public String getDescription() {
         return description;
+    }
+// Returns the complete arraylist of creatures tied to one room
+    public ArrayList<Creature> getCreatures() {
+        return creatures;
+    }
+//    Removes a creature from the arraylist of creatures
+    public void removeCreature(Creature creature){
+        creatures.remove(creature);
     }
 
     public Item removeItem(String itemName) {

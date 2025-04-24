@@ -20,10 +20,10 @@ public class Adventure {
 
         while (gameRunning) {
             String[] commandString = ui.readInput();
-            String firstWord = commandString[0];
+            String firstWord = commandString[0].trim();
             String secondWord = "";
             if (commandString.length > 1) {
-                secondWord = commandString[1];
+                secondWord = commandString[1].trim();
             }
 
             switch (firstWord) {
@@ -46,7 +46,8 @@ public class Adventure {
                     ui.printMessage("Thank you for playing Adventure");
                     break;
                 case "go":
-                    Direction direction = parseCommand(commandString[1]);
+                    if(commandString.length<2){break;}
+                    Direction direction = parseCommand(commandString[1].trim());
                     if(direction != null) {goCommand(direction);break;}
                     else {break;}
                 case "take":
@@ -65,11 +66,37 @@ public class Adventure {
                     break;
                 case "health":
                     ui.printMessage("you have "+player.getHP()+ "in HP");
+                    break;
                 case "equip":
                     if(player.EquipItem(secondWord)){
                         ui.printMessage("you have now equipped "+secondWord+" your damage points is now "+player.getCurrentAttack());
                     }          
                     break;
+                case "attack":
+                    if(!player.getCurrentRoom().getCreatures().isEmpty())
+
+                            while(player.getCurrentRoom().getCreatures().getFirst().getHealthPoints()>0 && player.getHP()>0){
+                              fight(player.getCurrentRoom().getCreatures().getFirst());
+                              if(player.getHP()<=0){
+                                  ui.printMessage("You have been defeated");
+                                  gameRunning = false;
+                                  ui.printMessage("Thank you for playing Adventure");
+                                  break;
+                              }else {
+                                  ui.printMessage("Congratulations you have defeated the beast! here is 1 HP to prepare for the next fight coming soon!");
+                              player.setHP(1);
+                              player.getCurrentRoom().removeCreature(player.getCurrentRoom().getCreatures().getFirst());
+                                  break;
+
+                              }
+
+                            }
+                    else{
+                        ui.printMessage("There are no creatures to fight!");
+                        break;
+                    }
+                    break;
+//
                 default:
                     ui.printMessage("I do not understand that command.");
             }
@@ -108,6 +135,30 @@ public class Adventure {
 
         }
         return requestedDirection;
+    }
+
+    public void fight(Creature creature){
+        ui.printMessage("you will now fight " + creature.getName());
+        int counter =1;
+        while(creature.getHealthPoints()>0&&player.getHP()>0) {
+            int creatureAP = creature.attack();
+            int playerAP = player.attack();
+            if (playerAP > creatureAP) {
+                ui.printMessage("you have successfully damaged " + creature.getName() + " by " + player.attack() + "!");
+                creature.changeHealthPoints(-playerAP);
+            } else if (playerAP < creatureAP) {
+                ui.printMessage("you have been damaged by " + creatureAP);
+                player.setHP(-creatureAP);
+
+            } else {
+                ui.printMessage("you're caught in a stalemate! attack again to be break free!");
+            }
+            if(player.isEquipped()&& player.getEquipedItem() instanceof RangedWeapon){
+                ((RangedWeapon) player.getEquipedItem()).setRounds(-counter);
+
+            }
+        }
+
     }
 
     public boolean goDirection(Direction direction) {

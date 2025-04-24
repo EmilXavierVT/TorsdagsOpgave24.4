@@ -11,11 +11,12 @@ public class Map {
         room1.addItem("a crinkly paper map with a big X in the middle", "map");
 
         Room room2 = new Room("Narrow cave", "narrow cave that seems to bend up and down almost infinitely");
+        room2.addMeleeWeapon("Anunfammable magical stick",7);
 
         Room room3 = new Room("Large grotto", "large grotto with an opening very far below where no light shines through.");
         room3.addItem("a wicker bird cage");
 
-        //TODO create rest of the 9 rooms in cave
+
 
         Room room4 = new Room("Wet cave","large dark cave - the floor is quite wet and slippery here.");
         room4.addConsumable("A delicious glistering apple",5);
@@ -26,7 +27,10 @@ public class Map {
                 Room room8 = new Room("Mellon cave", "small stony path next to the dark lake. A small door seems to be carved into the rock-face");
                 Room room6 = new Room("Stairwell","a tight enclosure leading deeper into the stomach of the cave");
                 Room room9 = new Room("Den of snails", "a million snails all approach you have stepped into their secret lair!");
+                for(int i =0; i<100;i++){
+                    room9.addCreature("one of many slimy snails","lowlife snail",10,1+i,65);}
                 Room room5 = new Room("Treasure cave","small dark cave with apparently only a single opening");
+                room5.addCreature("A huge slimy slug","KingSlug",30,11,80);
         // Connect rooms
         room1.setEastRoom(room2);
         room2.setEastRoom(room3);
