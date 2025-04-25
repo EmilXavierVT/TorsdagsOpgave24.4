@@ -8,7 +8,7 @@ public class Player {
 
     private int currentHealth = 10;
     private int currentAttack = 10;
-    private int successRate =100;
+    private int successRate = 100;
     private boolean isEquipped = false;
     private Room currentRoom;
     private ArrayList<Item> inventory;
@@ -46,8 +46,7 @@ public class Player {
                 System.out.println("not a valid direction try again!");
                 move(direction);
         }
-        if(requestedRoom!= null)
-        {
+        if (requestedRoom != null) {
             currentRoom = requestedRoom;
             return true;
         }
@@ -62,7 +61,8 @@ public class Player {
     public List<Item> getInventory() {
         return inventory;
     }
-    public void addToInventory(Item item){
+
+    public void addToInventory(Item item) {
         inventory.add(item);
 
     }
@@ -101,7 +101,7 @@ public class Player {
 
     public boolean EquipItem(String WeaponName) {
 
-        if(isEquipped){
+        if (isEquipped) {
             unequipWeapon();
 
         }
@@ -114,31 +114,36 @@ public class Player {
                 Item item = inventory.get(i);
                 if (item instanceof Weapon) {
                     if (item.getName().equalsIgnoreCase(WeaponName)) {
-                            setCurrentAttack(((Weapon)item).getDamagePoints());
+                        setCurrentAttack(((Weapon) item).getDamagePoints());
                         setSuccessRate(95); // TODO change to unique parameter
                         // Optionally, trigger effects of the consumable here
                         // ((Consumable) item).consume();
-                        isEquipped =true;
-                        equipedItem =item;
+                        isEquipped = true;
+                        equipedItem = item;
                         return true;
                     }
-                }if(item instanceof RangedWeapon){
-                    if(((RangedWeapon) item).getRounds()!=0){
+                }
+                if (item instanceof RangedWeapon) {
+                    if (((RangedWeapon) item).getRounds() != 0) {
                         setCurrentAttack(((RangedWeapon) item).getDamagePoints());
                         setSuccessRate(90); // TODO change to unique parameter
-                        isEquipped =true;
-                        equipedItem =item;
-                        if(((RangedWeapon) item).getRounds()==0){
-//                             var ui =new UserInterface();
-//                             ui.printMessage("Your weapon has no more charges your Attack strength is back too "+currentAttack+" !");
-                            unequipWeapon();
-                        }
-                    }   return true;
+                        isEquipped = true;
+                        equipedItem = item;
+                    } else if (((RangedWeapon) item).getRounds() == 0) {
+//                        UserInterface ui = new UserInterface();
+//
+//                        unequipWeapon();
+//                        ui.printMessage("Your weapon has no more charges your Attack strength is back too " + currentAttack + " !");
+                        break;
+                    }
                 }
+                return true;
             }
-
         }
+
+
         return false;
+
     }
 
     public void unequipWeapon(){

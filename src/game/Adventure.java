@@ -162,6 +162,7 @@ public class Adventure {
                 ((RangedWeapon) player.getEquipedItem()).setRounds(-counter);
 
             }
+            counter--;
         }
 
     }

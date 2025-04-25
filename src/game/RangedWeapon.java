@@ -7,7 +7,7 @@ public class RangedWeapon extends Weapon{
         this.rounds = rounds;
     }
     public void setRounds(int extraCharges){
-        rounds = rounds + extraCharges;
+        this.rounds = this.rounds + extraCharges;
     }
     public int getRounds(){
         return this.rounds;
