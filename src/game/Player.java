@@ -7,7 +7,7 @@ import java.util.Random;
 public class Player {
 
     private int currentHealth = 10;
-    private int currentAttack = 5;
+    private int currentAttack = 10;
     private int successRate =100;
     private boolean isEquipped = false;
     private Room currentRoom;
@@ -129,6 +129,8 @@ public class Player {
                         isEquipped =true;
                         equipedItem =item;
                         if(((RangedWeapon) item).getRounds()==0){
+//                             var ui =new UserInterface();
+//                             ui.printMessage("Your weapon has no more charges your Attack strength is back too "+currentAttack+" !");
                             unequipWeapon();
                         }
                     }   return true;
@@ -140,7 +142,7 @@ public class Player {
     }
 
     public void unequipWeapon(){
-        this.currentAttack = 5;
+        this.currentAttack = 10;
         this.isEquipped =false;
         this.successRate =100;
         this.equipedItem =null;

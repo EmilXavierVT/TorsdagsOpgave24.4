@@ -75,6 +75,7 @@ public class Adventure {
                 case "attack":
                     if(!player.getCurrentRoom().getCreatures().isEmpty())
 
+
                             while(player.getCurrentRoom().getCreatures().getFirst().getHealthPoints()>0 && player.getHP()>0){
                               fight(player.getCurrentRoom().getCreatures().getFirst());
                               if(player.getHP()<=0){
@@ -83,6 +84,10 @@ public class Adventure {
                                   ui.printMessage("Thank you for playing Adventure");
                                   break;
                               }else {
+                                  if((player.getCurrentRoom().getCreatures().getFirst() instanceof Boss)){
+                                      player.addToInventory(((Boss) player.getCurrentRoom().getCreatures().getFirst()).ifDefeated());
+                                      ui.printMessage("an item have been added to your inventory!");
+                                  }
                                   ui.printMessage("Congratulations you have defeated the beast! here is 1 HP to prepare for the next fight coming soon!");
                               player.setHP(1);
                               player.getCurrentRoom().removeCreature(player.getCurrentRoom().getCreatures().getFirst());

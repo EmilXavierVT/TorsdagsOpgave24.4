@@ -24,6 +24,8 @@ public class Room {
         items.add(item);
     }
     public void addCreature(Creature creature){creatures.add(creature);}
+    public void addBoss(Boss boss){creatures.add(boss);}
+    public void addMinion(Minion minion){creatures.add(minion);}
 
     // Convenience methods for creating and adding Item
     public void addItem(String description) {
@@ -39,6 +41,12 @@ public class Room {
     public void addMeleeWeapon(String description,int damagePoints){this.addItem(new MelleWeapon(description,damagePoints));}
     public void addCreature(String description, String name, int healthPoints, int damagePoints, int successRate){
         this.addCreature(new Creature(description, name, healthPoints, damagePoints, successRate));
+    }
+    public void addBoss(String description, String name, int healthPoints, int damagePoints, int successRate,Weapon weapon){
+        this.addBoss(new Boss(description, name, healthPoints, damagePoints, successRate,weapon));
+    }
+    public void addMinion(String description, String name, int healthPoints, int damagePoints, int successRate){
+        this.addMinion(new Minion(description, name, healthPoints, damagePoints, successRate));
     }
 
 // we set the room order by the call of the following methods

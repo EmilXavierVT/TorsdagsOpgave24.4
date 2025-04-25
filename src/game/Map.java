@@ -28,9 +28,9 @@ public class Map {
                 Room room6 = new Room("Stairwell","a tight enclosure leading deeper into the stomach of the cave");
                 Room room9 = new Room("Den of snails", "a million snails all approach you have stepped into their secret lair!");
                 for(int i =0; i<100;i++){
-                    room9.addCreature("one of many slimy snails","lowlife snail",10,1+i,65);}
+                    room9.addMinion("one of many slimy snails","lowlife snail",10,1+i,65);}
                 Room room5 = new Room("Treasure cave","small dark cave with apparently only a single opening");
-                room5.addCreature("A huge slimy slug","KingSlug",30,11,80);
+                room5.addBoss("A huge slimy slug","KingSlug",30,11,80,new Weapon("A strong shield",10));
         // Connect rooms
         room1.setEastRoom(room2);
         room2.setEastRoom(room3);
