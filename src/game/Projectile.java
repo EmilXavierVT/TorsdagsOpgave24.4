@@ -10,4 +10,8 @@ public class Projectile extends Weapon{
     public int getId() {
         return id;
     }
+    @Override
+    public String toString(){
+        return getName();
+    }
 }

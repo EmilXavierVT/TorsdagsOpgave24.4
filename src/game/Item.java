@@ -32,4 +32,5 @@ public class Item {
     public int getDamagePoints(){return 0;};
 
     public  void setDamagePoints(int damagePoints){};
+    public int getAcceptedID() {return 0;}
 }

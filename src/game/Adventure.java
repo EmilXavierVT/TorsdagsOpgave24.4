@@ -63,7 +63,7 @@ public class Adventure {
                     if(player.consumeItem(secondWord)){
                         ui.printMessage("you're now eating the " + secondWord+ " your HP changes to "+player.getHP());
                     }else {
-                        ui.printMessage("you do not carry: " + secondWord);
+                        ui.printMessage("you do not carry or you can not eat " + secondWord);
                     }
                     break;
                 case "hp":
@@ -72,13 +72,22 @@ public class Adventure {
                 case "dp":
                     ui.printMessage("your strength is "+player.attack());
                     break;
+                case "quiver":
+                    for(Projectile p: player.getQuiver()) {
+                        ui.printMessage(p.toString());
+                        break;
+                    }
                 case "equip":
                     if(player.EquipItem(secondWord)){
                         ui.printMessage("you have now equipped "+secondWord+" your damage points is now around "+(player.getCurrentAttack()+player.getEquipedItem().getDamagePoints()));
-                    }          
-                    break;
+                        break;
+                    }
+
+                    else{
+                        ui.printMessage("I'm sorry but you can't equip "+secondWord);
+                    }
                 case "attack":
-                    ArrayList<Creature> creatureList=player.getCurrentRoom().getCreatures();;
+                    ArrayList<Creature> creatureList=player.getCurrentRoom().getCreatures();
                     if(!creatureList.isEmpty()) {
                         Creature curentCreature = creatureList.getFirst();
 
@@ -96,12 +105,12 @@ public class Adventure {
                                 if ((curentCreature instanceof Boss)) {
                                     player.addToInventory(curentCreature.ifDefeated());
                                     ui.printMessage("an item have been added to your inventory!");
-                                    ui.printMessage("Congratulations you have defeated the boss beast! here is 3 HP to prepare for the next fight coming soon!");
+                                    ui.printMessage("Congratulations you have defeated the boss beast! Here is 3 HP to prepare for the next fight coming soon!");
                                     player.setHP(3);
                                     player.getCurrentRoom().removeCreature(curentCreature);
                                     break;
                                 } else {
-                                    ui.printMessage("Congratulations you have defeated the beast! here is 1 HP to prepare for the next fight coming soon!");
+                                    ui.printMessage("Congratulations you have defeated the beast! Here is 1 HP to prepare for the next fight coming soon!");
                                     player.setHP(1);
                                     player.getCurrentRoom().removeCreature(curentCreature);
                                     break;
@@ -110,12 +119,13 @@ public class Adventure {
                             }
 
                         }
+                        break;
                     }
                     else{
                         ui.printMessage("There are no creatures to fight!");
                         break;
                     }
-                    break;
+                   
 //
                 default:
                     ui.printMessage("I do not understand that command.");
@@ -162,10 +172,15 @@ public class Adventure {
         ui.printMessage("you will now fight " + creature.getName());
 
         while(creature.getHealthPoints()>0&&player.getHP()>0) {
+
             int creatureAP = creature.attack();
             int playerAP = player.attack();
+
+
             if (playerAP > creatureAP) {
+
                 ui.printMessage("you have successfully damaged " + creature.getName() + " by " + player.attack() + "!");
+
                 creature.changeHealthPoints(-playerAP);
 
             } else if (playerAP < creatureAP) {
@@ -175,7 +190,8 @@ public class Adventure {
             } else {
                 ui.printMessage("you're caught in a stalemate! attack again to be break free!");
             }
-            player.removeFromQuiver(1);
+            if(player.isEquipped()&&!player.getQuiver().isEmpty()&& player.getEquipedItem().getAcceptedID() == player.getQuiver().getFirst().getId()) {
+                 player.removeFromQuiver(1);  }
             if(!player.isEquipped() && counter<1){
                 ui.printMessage("you are no longer equipped! your current attack point is "+player.getCurrentAttack());
                 counter++;

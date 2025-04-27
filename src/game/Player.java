@@ -65,7 +65,11 @@ public class Player {
     }
 
     public void addToInventory(Item item) {
-        inventory.add(item);
+        if(item instanceof Projectile){
+            quiver.add((Projectile) item);
+        }else {
+            inventory.add(item);
+        }
 
     }
 
@@ -80,6 +84,7 @@ public class Player {
                     for (int i = 0; i < 3; i++) {
                         quiver.add(new Projectile("Arrow", 5, 1));
                     }
+                    quiver.add(new Projectile("stone",1,2));
                     break;
 
             }
@@ -144,14 +149,15 @@ public class Player {
                             this.equipedItem = item;
                             this.equipedItem.setDamagePoints(quiver.getFirst().getDamagePoints());
                             setSuccessRate(90); // TODO change to unique parameter
-
+                        return true;
                         } else {
                         unequipWeapon();
                             break;
                         }
                     }
                 }
-                return true;
+                if(!(item instanceof Weapon)){return false;}
+//                return true;
             }
         }
 
@@ -173,13 +179,16 @@ public class Player {
             return 0;
         }
         if(isEquipped) {
-            if (equipedItem instanceof RangedWeapon && !quiver.isEmpty()) {
+            for(Projectile p : quiver) {
+            if (equipedItem instanceof RangedWeapon && p.getId() ==equipedItem.getAcceptedID()) {
 
                 return currentAttack + equipedItem.getDamagePoints() + missFactor / 25;
             }
-            if (quiver.isEmpty()) {
-                unequipWeapon();
-                return currentAttack  + missFactor / 25;
+
+                if (quiver.isEmpty() || p.getId()!=equipedItem.getAcceptedID()) {
+                    unequipWeapon();
+                    return currentAttack + missFactor / 25;
+                }
             }
         }
         return currentAttack +missFactor/25;

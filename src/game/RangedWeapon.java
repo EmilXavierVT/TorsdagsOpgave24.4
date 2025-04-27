@@ -23,5 +23,6 @@ public class RangedWeapon extends Weapon {
         return this.rounds;
     }
 
+    @Override
     public int getAcceptedID() {return acceptedID;}
 }

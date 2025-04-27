@@ -36,7 +36,7 @@ public class Map {
 
 //      Boss room! here the player fights the boss and gets a reward
         Room room5 = new Room("Treasure cave","small dark cave with apparently only a single opening");
-        room5.addBoss("A huge slimy slug","KingSlug",30,11,80,new Weapon("A strong shield",10));
+        room5.addBoss("A huge slimy slug","KingSlug",30,11,80,new Projectile("poisonous arrow",6,1));
         room5.addBoss("a huge shining armour","Haunted Armour",50,16,85,new Weapon("A ragged long sword",12));
 
 
