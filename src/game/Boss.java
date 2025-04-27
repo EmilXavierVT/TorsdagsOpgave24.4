@@ -7,6 +7,7 @@ public class Boss extends Creature{
         super(description, name, healthPoints, damagePoints, successRate);
         this.weapon =weapon;
     }
+    @Override
     public Weapon  ifDefeated(){
         return weapon;
     }

@@ -26,4 +26,10 @@ public class Item {
     public String toString() {
         return description;
     }
+
+
+//    Overridden methods
+    public int getDamagePoints(){return 0;};
+
+    public  void setDamagePoints(int damagePoints){};
 }

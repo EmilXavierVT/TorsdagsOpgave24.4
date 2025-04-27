@@ -13,9 +13,11 @@ public class Player {
     private Room currentRoom;
     private ArrayList<Item> inventory;
     private Item equipedItem;
+    private ArrayList<Projectile> quiver;
 
     public Player() {
         inventory = new ArrayList<>();
+        quiver = new ArrayList<>();
     }
 
     public Room getCurrentRoom() {
@@ -69,8 +71,19 @@ public class Player {
 
     public boolean takeItem(String itemName) {
         Item pickupFromRoom = currentRoom.removeItem(itemName);
+
+
         if (pickupFromRoom != null) {
             inventory.add(pickupFromRoom);
+            switch (pickupFromRoom.getName()) {
+                case "crossbow":
+                    for (int i = 0; i < 3; i++) {
+                        quiver.add(new Projectile("Arrow", 5, 1));
+                    }
+                    break;
+
+            }
+
             return true;
         }
         return false;
@@ -107,34 +120,35 @@ public class Player {
         }
 
         if (!isEquipped) {
-//        takes the inventory list and runs through all possible names until one matches with the paramater string
+//        takes the inventory list and runs through all possible names until one matches with the parameter string
 //        removes the consumable and sets the hp of the player
 
             for (int i = 0; i < inventory.size(); i++) {
                 Item item = inventory.get(i);
-                if (item instanceof Weapon) {
+                if (item instanceof MeleeWeapon) {
                     if (item.getName().equalsIgnoreCase(WeaponName)) {
                         setCurrentAttack(((Weapon) item).getDamagePoints());
                         setSuccessRate(95); // TODO change to unique parameter
                         // Optionally, trigger effects of the consumable here
                         // ((Consumable) item).consume();
-                        isEquipped = true;
-                        equipedItem = item;
+                        this.isEquipped = true;
+                        this.equipedItem = item;
                         return true;
                     }
+                    break;
                 }
                 if (item instanceof RangedWeapon) {
-                    if (((RangedWeapon) item).getRounds() != 0) {
-                        setCurrentAttack(((RangedWeapon) item).getDamagePoints());
-                        setSuccessRate(90); // TODO change to unique parameter
-                        isEquipped = true;
-                        equipedItem = item;
-                    } else if (((RangedWeapon) item).getRounds() == 0) {
-//                        UserInterface ui = new UserInterface();
-//
-//                        unequipWeapon();
-//                        ui.printMessage("Your weapon has no more charges your Attack strength is back too " + currentAttack + " !");
-                        break;
+                    if (item.getName().equalsIgnoreCase(WeaponName)) {
+                        if (!quiver.isEmpty()) {
+                            this.isEquipped = true;
+                            this.equipedItem = item;
+                            this.equipedItem.setDamagePoints(quiver.getFirst().getDamagePoints());
+                            setSuccessRate(90); // TODO change to unique parameter
+
+                        } else {
+                        unequipWeapon();
+                            break;
+                        }
                     }
                 }
                 return true;
@@ -158,7 +172,17 @@ public class Player {
         if (missFactor > successRate) {
             return 0;
         }
-        return currentAttack + missFactor/25;
+        if(isEquipped) {
+            if (equipedItem instanceof RangedWeapon && !quiver.isEmpty()) {
+
+                return currentAttack + equipedItem.getDamagePoints() + missFactor / 25;
+            }
+            if (quiver.isEmpty()) {
+                unequipWeapon();
+                return currentAttack  + missFactor / 25;
+            }
+        }
+        return currentAttack +missFactor/25;
     }
 
 
@@ -186,4 +210,36 @@ public class Player {
         return isEquipped;
     }
 
+
+
+
+    public void replenishQuiver(Projectile projectile,int charges){
+        for(int i = 0; i<charges; i++){
+            this.quiver.add(projectile);
+        }
+    }
+
+    public void removeFromQuiver(int usedCharges){
+        if(!quiver.isEmpty()) {
+
+            for (int i = 0; i < usedCharges; i++) {
+                this.quiver.removeFirst();
+            }
+        }
+    }
+
+
+    public ArrayList<Projectile> getQuiver() {
+        return this.quiver;
+    }
+
+
+    public void setQuiver(ArrayList<Projectile> quiver) {
+        this.quiver = quiver;
+    }
+
+
+
+
 }
+

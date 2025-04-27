@@ -1,6 +1,8 @@
 package game;
 
 
+import java.util.ArrayList;
+
 public class Adventure {
 
     private Map map;
@@ -64,38 +66,51 @@ public class Adventure {
                         ui.printMessage("you do not carry: " + secondWord);
                     }
                     break;
-                case "health":
+                case "hp":
                     ui.printMessage("you have "+player.getHP()+ "in HP");
+                    break;
+                case "dp":
+                    ui.printMessage("your strength is "+player.attack());
                     break;
                 case "equip":
                     if(player.EquipItem(secondWord)){
-                        ui.printMessage("you have now equipped "+secondWord+" your damage points is now "+player.getCurrentAttack());
+                        ui.printMessage("you have now equipped "+secondWord+" your damage points is now around "+(player.getCurrentAttack()+player.getEquipedItem().getDamagePoints()));
                     }          
                     break;
                 case "attack":
-                    if(!player.getCurrentRoom().getCreatures().isEmpty())
+                    ArrayList<Creature> creatureList=player.getCurrentRoom().getCreatures();;
+                    if(!creatureList.isEmpty()) {
+                        Creature curentCreature = creatureList.getFirst();
+
+                        while (curentCreature.getHealthPoints() > 0 && player.getHP() > 0) {
+                            fight(curentCreature);
+                            if (player.getHP() <= 0) {
+
+                                ui.printMessage("You have been defeated");
+                                gameRunning = false;
+                                ui.printMessage("Thank you for playing Adventure");
+                                break;
 
 
-                            while(player.getCurrentRoom().getCreatures().getFirst().getHealthPoints()>0 && player.getHP()>0){
-                              fight(player.getCurrentRoom().getCreatures().getFirst());
-                              if(player.getHP()<=0){
-                                  ui.printMessage("You have been defeated");
-                                  gameRunning = false;
-                                  ui.printMessage("Thank you for playing Adventure");
-                                  break;
-                              }else {
-                                  if((player.getCurrentRoom().getCreatures().getFirst() instanceof Boss)){
-                                      player.addToInventory(((Boss) player.getCurrentRoom().getCreatures().getFirst()).ifDefeated());
-                                      ui.printMessage("an item have been added to your inventory!");
-                                  }
-                                  ui.printMessage("Congratulations you have defeated the beast! here is 1 HP to prepare for the next fight coming soon!");
-                              player.setHP(1);
-                              player.getCurrentRoom().removeCreature(player.getCurrentRoom().getCreatures().getFirst());
-                                  break;
-
-                              }
+                            } else {
+                                if ((curentCreature instanceof Boss)) {
+                                    player.addToInventory(curentCreature.ifDefeated());
+                                    ui.printMessage("an item have been added to your inventory!");
+                                    ui.printMessage("Congratulations you have defeated the boss beast! here is 3 HP to prepare for the next fight coming soon!");
+                                    player.setHP(3);
+                                    player.getCurrentRoom().removeCreature(curentCreature);
+                                    break;
+                                } else {
+                                    ui.printMessage("Congratulations you have defeated the beast! here is 1 HP to prepare for the next fight coming soon!");
+                                    player.setHP(1);
+                                    player.getCurrentRoom().removeCreature(curentCreature);
+                                    break;
+                                }
 
                             }
+
+                        }
+                    }
                     else{
                         ui.printMessage("There are no creatures to fight!");
                         break;
@@ -143,14 +158,16 @@ public class Adventure {
     }
 
     public void fight(Creature creature){
+        int counter=0;
         ui.printMessage("you will now fight " + creature.getName());
-        int counter =1;
+
         while(creature.getHealthPoints()>0&&player.getHP()>0) {
             int creatureAP = creature.attack();
             int playerAP = player.attack();
             if (playerAP > creatureAP) {
                 ui.printMessage("you have successfully damaged " + creature.getName() + " by " + player.attack() + "!");
                 creature.changeHealthPoints(-playerAP);
+
             } else if (playerAP < creatureAP) {
                 ui.printMessage("you have been damaged by " + creatureAP);
                 player.setHP(-creatureAP);
@@ -158,11 +175,14 @@ public class Adventure {
             } else {
                 ui.printMessage("you're caught in a stalemate! attack again to be break free!");
             }
-            if(player.isEquipped()&& player.getEquipedItem() instanceof RangedWeapon){
-                ((RangedWeapon) player.getEquipedItem()).setRounds(-counter);
-
+            player.removeFromQuiver(1);
+            if(!player.isEquipped() && counter<1){
+                ui.printMessage("you are no longer equipped! your current attack point is "+player.getCurrentAttack());
+                counter++;
             }
-            counter--;
+
+
+
         }
 
     }

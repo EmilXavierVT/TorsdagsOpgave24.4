@@ -72,4 +72,5 @@ public class Creature {
         return description + "\n" + " Health " + healthPoints +
                 " || Attack Strength " + damagePoints;
     }
+    public Weapon ifDefeated(){ return null;}
 }

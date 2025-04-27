@@ -9,11 +9,11 @@ public class Weapon extends Item{
         this.damagePoints =damagePoints;
     }
 
-
+@Override
     public int getDamagePoints() {
         return damagePoints;
     }
-
+    @Override
     public void setDamagePoints(int damagePoints) {
         this.damagePoints = damagePoints;
     }
