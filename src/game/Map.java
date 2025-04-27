@@ -56,7 +56,7 @@ public class Map {
 //      Farm room, room filled with snails
         Room room9 = new Room("Den of snails", "a million snails all approach you have stepped into their secret lair!");
         for(int i =0; i<100;i++){
-            room9.addMinion("one of many slimy snails","lowlife snail",10,1+i,65);
+            room9.addMinion("one of many slimy snails","lowlife snail",10,1+i,65 ,  new Projectile("A Slime-Arrow",4,1),100);
         }
 
 

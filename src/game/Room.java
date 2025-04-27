@@ -69,8 +69,8 @@ public class Room {
         this.addCreature(new Boss(description, name, healthPoints, damagePoints, successRate,weapon));
     }
 //   Add a minion
-    public void addMinion(String description, String name, int healthPoints, int damagePoints, int successRate){
-        this.addCreature(new Minion(description, name, healthPoints, damagePoints, successRate));
+    public void addMinion(String description, String name, int healthPoints, int damagePoints, int successRate, Weapon loot, int dropRate){
+        this.addCreature(new Minion(description, name, healthPoints, damagePoints, successRate, loot,dropRate));
     }
 
 // we set the room order by the call of the following methods

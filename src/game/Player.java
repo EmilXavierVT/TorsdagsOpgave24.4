@@ -84,13 +84,13 @@ public class Player {
                     for (int i = 0; i < 3; i++) {
                         quiver.add(new Projectile("Arrow", 5, 1));
                     }
-                    quiver.add(new Projectile("stone",1,2));
-                    break;
 
+                    break;
             }
 
             return true;
         }
+
         return false;
     }
 
@@ -178,9 +178,9 @@ public class Player {
         if (missFactor > successRate) {
             return 0;
         }
-        if(isEquipped) {
+        if(isEquipped && equipedItem instanceof RangedWeapon) {
             for(Projectile p : quiver) {
-            if (equipedItem instanceof RangedWeapon && p.getId() ==equipedItem.getAcceptedID()) {
+            if ( p.getId() ==equipedItem.getAcceptedID()) {
 
                 return currentAttack + equipedItem.getDamagePoints() + missFactor / 25;
             }

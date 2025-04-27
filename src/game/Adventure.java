@@ -75,8 +75,9 @@ public class Adventure {
                 case "quiver":
                     for(Projectile p: player.getQuiver()) {
                         ui.printMessage(p.toString());
-                        break;
+
                     }
+                    break;
                 case "equip":
                     if(player.EquipItem(secondWord)){
                         ui.printMessage("you have now equipped "+secondWord+" your damage points is now around "+(player.getCurrentAttack()+player.getEquipedItem().getDamagePoints()));
@@ -85,7 +86,13 @@ public class Adventure {
 
                     else{
                         ui.printMessage("I'm sorry but you can't equip "+secondWord);
+
                     }
+                    break;
+                case "unequip":
+                    player.unequipWeapon();
+                    ui.printMessage("You are now unequipped! your strength is around "+player.attack());
+                    break;
                 case "attack":
                     ArrayList<Creature> creatureList=player.getCurrentRoom().getCreatures();
                     if(!creatureList.isEmpty()) {
@@ -113,6 +120,7 @@ public class Adventure {
                                     ui.printMessage("Congratulations you have defeated the beast! Here is 1 HP to prepare for the next fight coming soon!");
                                     player.setHP(1);
                                     player.getCurrentRoom().removeCreature(curentCreature);
+                                    if(curentCreature instanceof Minion){ player.replenishQuiver((Projectile)((Minion) curentCreature).ifdefeated(),1);}
                                     break;
                                 }
 
