@@ -134,13 +134,12 @@ public class Player {
                     if (item.getName().equalsIgnoreCase(WeaponName)) {
                         setCurrentAttack(((Weapon) item).getDamagePoints());
                         setSuccessRate(95); // TODO change to unique parameter
-                        // Optionally, trigger effects of the consumable here
-                        // ((Consumable) item).consume();
+
                         this.isEquipped = true;
                         this.equipedItem = item;
                         return true;
                     }
-                    break;
+
                 }
                 if (item instanceof RangedWeapon) {
                     if (item.getName().equalsIgnoreCase(WeaponName)) {

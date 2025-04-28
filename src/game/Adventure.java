@@ -80,7 +80,7 @@ public class Adventure {
                     break;
                 case "equip":
                     if(player.EquipItem(secondWord)){
-                        ui.printMessage("you have now equipped "+secondWord+" your damage points is now around "+(player.getCurrentAttack()+player.getEquipedItem().getDamagePoints()));
+                        ui.printMessage("you have now equipped "+secondWord+" your damage points is now around "+ player.attack());
                         break;
                     }
 
@@ -187,7 +187,7 @@ public class Adventure {
 
             if (playerAP > creatureAP) {
 
-                ui.printMessage("you have successfully damaged " + creature.getName() + " by " + player.attack() + "!");
+                ui.printMessage("you have successfully damaged " + creature.getName() + " by " + playerAP + "!");
 
                 creature.changeHealthPoints(-playerAP);
 
@@ -198,7 +198,7 @@ public class Adventure {
             } else {
                 ui.printMessage("you're caught in a stalemate! attack again to be break free!");
             }
-            if(player.isEquipped()&&!player.getQuiver().isEmpty()&& player.getEquipedItem().getAcceptedID() == player.getQuiver().getFirst().getId()) {
+            if(player.isEquipped() && !player.getQuiver().isEmpty() && player.getEquipedItem().getAcceptedID() == player.getQuiver().getFirst().getId()) {
                  player.removeFromQuiver(1);  }
             if(!player.isEquipped() && counter<1){
                 ui.printMessage("you are no longer equipped! your current attack point is "+player.getCurrentAttack());
