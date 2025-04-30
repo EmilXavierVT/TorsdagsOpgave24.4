@@ -1,12 +1,10 @@
 package game.util;
 
-import game.User;
 import game.board.Map;
 import game.logic.Player;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class FileIO {
@@ -94,7 +92,7 @@ public class FileIO {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("data/userdata/map"+user+".txt"))) {
             return (Map) in.readObject();
         } catch (Exception e) {
-            System.out.println("Welcome to the game");;
+            System.out.println("\n"+"Welcome to the game");;
             return null;
         }
     }

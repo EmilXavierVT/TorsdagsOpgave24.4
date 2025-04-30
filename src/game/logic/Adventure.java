@@ -1,8 +1,8 @@
 package game.logic;
 
 
-import game.User;
-import game.UserManager;
+import game.userLogic.User;
+import game.userLogic.UserManager;
 import game.util.FileIO;
 import game.util.UserInterface;
 import game.board.Direction;
@@ -38,7 +38,7 @@ public class Adventure {
         if(io.loadMap(user.getName())!= null || io.loadPlayer(user.getName())!=null){
             map = io.loadMap(user.getName());
             player = io.loadPlayer(user.getName());
-        }    else{ui.printMessage("welcome new user!");}
+        }    else{ui.printMessage("\n"+"welcome new user!");}
 
         ui.printWelcome();
 

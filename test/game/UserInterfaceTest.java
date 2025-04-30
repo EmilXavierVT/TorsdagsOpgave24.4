@@ -8,7 +8,13 @@ class UserInterfaceTest {
 
     @Test
     void showlist() {
-        UserInterface um = new UserInterface();
-        um.showHelp();
+        UserInterface ui = new UserInterface();
+        ui.showHelp();
     }
+    @Test
+    void showWelcome() {
+        UserInterface ui = new UserInterface();
+        ui.printWelcome();
+    }
+
 }

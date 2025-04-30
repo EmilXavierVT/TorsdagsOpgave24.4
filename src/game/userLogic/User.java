@@ -1,6 +1,4 @@
-package game;
-
-import game.logic.Player;
+package game.userLogic;
 
 import java.io.Serializable;
 
