@@ -1,5 +1,7 @@
 package game;
 
+import game.board.Map;
+import game.board.Room;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

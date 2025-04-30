@@ -1,6 +1,10 @@
 package game;
 
-import org.junit.jupiter.api.Disabled;
+import game.board.Direction;
+import game.board.Map;
+import game.board.Room;
+import game.items.Consumable;
+import game.logic.Player;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;

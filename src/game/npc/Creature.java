@@ -1,8 +1,13 @@
-package game;
+package game.npc;
 
+import game.items.Weapon;
+
+import java.io.Serializable;
 import java.util.Random;
 
-public class Creature {
+public class Creature implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String description;
     private String name;
     private int healthPoints;

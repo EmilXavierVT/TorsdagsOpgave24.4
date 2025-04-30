@@ -1,8 +1,14 @@
-package game;
+package game.board;
 
+import game.items.Projectile;
+import game.items.Weapon;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Map {
+public class Map implements Serializable{
+    private static final long serialVersionUID = 1L;
+
     private ArrayList<Projectile> allProjectiles = new ArrayList<>();
 
     private Room startRoom;

@@ -1,8 +1,16 @@
-package game;
+package game.board;
 
+import game.items.*;
+import game.npc.Boss;
+import game.npc.Creature;
+import game.npc.Minion;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Room {
+public class Room implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Room northRoom;
     private Room eastRoom;
     private Room southRoom;
@@ -65,7 +73,7 @@ public class Room {
     }
 
 //    Add a boss
-    public void addBoss(String description, String name, int healthPoints, int damagePoints, int successRate,Weapon weapon){
+    public void addBoss(String description, String name, int healthPoints, int damagePoints, int successRate, Weapon weapon){
         this.addCreature(new Boss(description, name, healthPoints, damagePoints, successRate,weapon));
     }
 //   Add a minion

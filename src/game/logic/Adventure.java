@@ -1,5 +1,17 @@
-package game;
+package game.logic;
 
+
+import game.User;
+import game.UserManager;
+import game.util.FileIO;
+import game.util.UserInterface;
+import game.board.Direction;
+import game.board.Map;
+import game.board.Room;
+import game.items.Projectile;
+import game.npc.Boss;
+import game.npc.Creature;
+import game.npc.Minion;
 
 import java.util.ArrayList;
 
@@ -8,17 +20,28 @@ public class Adventure {
     private Map map;
     private Player player;
     private UserInterface ui = new UserInterface();
+    private FileIO io = new FileIO();
+    private UserManager um = new UserManager();
+    private User user;
 
     public Adventure() {
         map = new Map();
         map.buildMap();
         player = new Player();
         player.setCurrentRoom(map.getStartRoom());
+
     }
 
     public void startGame() {
         boolean gameRunning = true;
+        user = um.loginProcess();
+        if(io.loadMap(user.getName())!= null || io.loadPlayer(user.getName())!=null){
+            map = io.loadMap(user.getName());
+            player = io.loadPlayer(user.getName());
+        }    else{ui.printMessage("welcome new user!");}
+
         ui.printWelcome();
+
 
         while (gameRunning) {
             String[] commandString = ui.readInput();
@@ -46,6 +69,8 @@ public class Adventure {
                 case "bye":
                     gameRunning = false;
                     ui.printMessage("Thank you for playing Adventure");
+                    io.savePlayer(player, user.getName());
+                    io.saveMap(map,user.getName());
                     break;
                 case "go":
                     if(commandString.length<2){break;}
@@ -67,7 +92,7 @@ public class Adventure {
                     }
                     break;
                 case "hp":
-                    ui.printMessage("you have "+player.getHP()+ "in HP");
+                    ui.printMessage("you have "+player.getHP()+ " HP");
                     break;
                 case "dp":
                     ui.printMessage("your strength is "+player.attack());
@@ -133,7 +158,20 @@ public class Adventure {
                         ui.printMessage("There are no creatures to fight!");
                         break;
                     }
-                   
+                case "logout":
+                    io.savePlayer(player, user.getName());
+                    io.saveMap(map,user.getName());
+                    ui.printMessage("you have now saved the game and will now logout!");
+                    um.loginProcess();
+                    break;
+
+
+                case "save":
+                    io.savePlayer(player, user.getName());
+                    io.saveMap(map,user.getName());
+                    ui.printMessage("you have now saved the game!");
+                    break;
+
 //
                 default:
                     ui.printMessage("I do not understand that command.");
@@ -198,9 +236,9 @@ public class Adventure {
             } else {
                 ui.printMessage("you're caught in a stalemate! attack again to be break free!");
             }
-            if(player.isEquipped() && !player.getQuiver().isEmpty() && player.getEquipedItem().getAcceptedID() == player.getQuiver().getFirst().getId()) {
+            if(player.isPlayerEquipped() && !player.getQuiver().isEmpty() && player.getEquipedItem().getAcceptedID() == player.getQuiver().getFirst().getId()) {
                  player.removeFromQuiver(1);  }
-            if(!player.isEquipped() && counter<1){
+            if(!player.isPlayerEquipped() && counter<1){
                 ui.printMessage("you are no longer equipped! your current attack point is "+player.getCurrentAttack());
                 counter++;
             }

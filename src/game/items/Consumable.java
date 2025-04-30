@@ -1,6 +1,10 @@
-package game;
+package game.items;
 
-public class Consumable extends Item{
+import java.io.Serializable;
+
+public class Consumable extends Item implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int healthPoints;
 
     public Consumable(String description, int healthPoints) {

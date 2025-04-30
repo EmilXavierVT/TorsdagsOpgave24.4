@@ -1,6 +1,10 @@
-package game;
+package game.items;
 
-public class Weapon extends Item{
+import java.io.Serializable;
+
+public class Weapon extends Item implements Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private int damagePoints;
 

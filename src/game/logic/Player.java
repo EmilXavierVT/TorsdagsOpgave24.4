@@ -1,10 +1,15 @@
-package game;
+package game.logic;
 
+import game.board.Direction;
+import game.board.Room;
+import game.items.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Player {
+public class Player implements Serializable {
 
     private int currentHealth = 10;
     private int currentAttack = 10;
@@ -18,6 +23,18 @@ public class Player {
     public Player() {
         inventory = new ArrayList<>();
         quiver = new ArrayList<>();
+    }
+
+    public Player(int currentHealth, int currentAttack, int successRate, boolean isEquipped, Room currentRoom,
+                  ArrayList<Item> inventory, Item equipedItem, ArrayList<Projectile> quiver) {
+        this.currentHealth = currentHealth;
+        this.currentAttack = currentAttack;
+        this.successRate = successRate;
+        this.isEquipped = isEquipped;
+        this.currentRoom = currentRoom;
+        this.inventory = inventory;
+        this.equipedItem = equipedItem;
+        this.quiver = quiver;
     }
 
     public Room getCurrentRoom() {
@@ -53,8 +70,7 @@ public class Player {
             return true;
         }
 
-        // TODO if (requestedRoom != null) make currentRoom the requestedRoom;
-        // TODO return whether move was possible
+
         {
             return false;
         }
@@ -151,7 +167,7 @@ public class Player {
                         return true;
                         } else {
                         unequipWeapon();
-                            break;
+
                         }
                     }
                 }
@@ -214,7 +230,7 @@ public class Player {
         return equipedItem;
     }
 
-    public boolean isEquipped(){
+    public boolean isPlayerEquipped(){
         return isEquipped;
     }
 
