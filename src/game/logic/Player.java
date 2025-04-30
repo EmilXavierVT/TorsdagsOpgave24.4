@@ -171,8 +171,7 @@ public class Player implements Serializable {
                         }
                     }
                 }
-                if(!(item instanceof Weapon)){return false;}
-//                return true;
+//                                If i need to add more equippable items :)
             }
         }
 
